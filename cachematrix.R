@@ -18,7 +18,9 @@ makeCacheMatrix <- function(m = matrix()) {
 }
 
 
-## cacheSolve: computes inverse of square matrix contained in list, caching result
+## cacheSolve: checks for cached inverse of square matrix in list
+##             if found, returns cached inverse matrix
+##             if not found, computes inverse of square matrix contained in list, caching result
 
 cacheSolve <- function(m) {
     ## Return a matrix that is the inverse of 'm'
