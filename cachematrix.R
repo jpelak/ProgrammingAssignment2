@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## R functions to handle lists which, given a square matrix, provide caching of the inverse
 
-## Write a short comment describing this function
+## makeCacheMatrix: creates a list with get/set and getinverse/setinverse functions for square matricies
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function(m = matrix()) {
+    minverse <- NULL
+    set <- function(y) {
+        m <<- y
+        minverse <<- NULL
+    }
+    get <- function() m
+    setinverse <- function(inverse) minverse <<- inverse
+    getinverse <- function() minverse
+    list(set = set,
+         get = get,
+         setinverse = setinverse,
+         getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve: computes inverse of square matrix contained in list, caching result
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(m) {
+    ## Return a matrix that is the inverse of 'm'
+    minverse <- m$getinverse()
+    if(!is.null(minverse)) {
+        message("getting cached data")
+        return(minverse)
+    }
+    data <- m$get()
+    minverse <- solve(data)
+    m$setinverse(minverse)
+    minverse
 }
